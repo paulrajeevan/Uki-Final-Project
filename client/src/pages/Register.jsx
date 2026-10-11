@@ -62,11 +62,14 @@ const Register = () => {
             )}
 
             <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl mb-6">
-                <button type="button" onClick={() => setRole('student')} className={`flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-all ${role === 'student' ? 'bg-white text0brand-blue shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
+                <button type="button" onClick={() => setRole('student')} className={`flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-all ${role === 'student' ? 'bg-white text-brand-blue shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
                     <GraduationCap className="w-4 h-4"/>
                     Student
                 </button>
-                
+                <button type="button" onClick={() => setRole('teacher')} className={`flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-all ${ role === 'teacher' ? 'bg-white text-brand-teal shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>
+                    <Briefcase className="w-4 h-4"/>
+                    Teacher
+                </button>
             </div>
         </div>
     )

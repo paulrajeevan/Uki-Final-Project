@@ -1,6 +1,7 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {useAuth} from '../context/AuthContext'
 import {BookOpen, LogOut, User as UserIcon} from 'lucide-react'
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
     const {user,logout} = useAuth()
@@ -16,9 +17,7 @@ const Navbar = () => {
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                 <div className='flex justify-between items-center h-16'>
                     <Link to="/" className='flex items-center gap-2'>
-                    <div className='w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-blue via-brand-purple to-brand-teal flex items-center justify-center text-white shadow-md'>
-                        <BookOpen className='w-6 h-6' />
-                    </div>
+                    <img src={logo} alt="LearnyMo Logo" className='w-10 h-10 object-contain rounded-full' />
                     <div>
                         <span className='text-xl font-bold bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent'>
                             LearnyMo
