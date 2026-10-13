@@ -44,7 +44,51 @@ const Login = () => {
                 <p className="text-sm text-slate-500 mt-1">Sign in to access your classes and dashboard</p>
             </div>
 
-            
+            {isSessionExpired && (
+                <div className="mb-4 p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-amber-600"/>
+                    <span>Your session has expired. Please sign in again.</span>
+                </div>
+            )}
+
+            {error && (
+                <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0"/>
+                    <span>{error}</span>
+                </div>
+            )}
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                        Email Address
+                    </label>
+                    <div className="relative">
+                        <Mail className="w-4 h-4 absolute left-3 top-3 text-slate-400"></Mail>
+                        <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue" />
+                    </div>
+                </div>
+                <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                        Password
+                    </label>
+                    <div className="relative">
+                        <Lock className="w-4 h-4 absolute left-3 top-3 text-slate-400"/>
+                        <input type="password" required value={password} onChange={(e)=> setPassword(e.target.value)} placeholder="Enter your password" className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"/>
+                    </div>
+                </div>
+                <button type="submit" disabled={loading} className={`w-full py-2.5 px-4 text-white font-semibold text-sm rounded-lg shadow-sm hover:shadow transition-all bg-brand-blue hover:bg-blue-700 mt-2 ${
+                    loading ? 'opacity-70 cursor-not-allowed' : ''
+                }`}>
+                    {loading ? 'Signing in ...' : 'Sign In'}
+                </button>
+            </form>
+
+            <p className="text-center text-xs text-slate-500 mt-6">
+                Don't have an account?{' '}
+                <Link to="/register" className="font-semibold text-brand-blue hover:underline">
+                Create an Account
+                </Link>
+            </p>
         </div>
     )
 }
