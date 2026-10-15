@@ -91,7 +91,40 @@ const AcademicSelector = ({ onselect }) => {
             ))}
           </select>
         </div>
+        <div>
+          <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">
+            Unit
+          </label>
+          <select disabled={!selectedSubjectId} value={selectedUnitIndex} onChange={handleUnitChange} className="w-full text-sm border border-slate-300 rounded-lg p-2.5 bg-white disabled:bg-slate-100 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+            <option value="">-- Choose Unit --</option>
+            {units.map((unit,index)=>(
+              <option key={index} value={index}>
+                Unit {unit.unitNumber}:{unit.title}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Topic</label>
+          <select disabled={selectedUnitIndex === ''} value={selectedTopicName} onChange={handleTopicChange} className="w-full text-sm border border-slate-300 rounded-lg p-2.5 bg-white disabled:bg-slate-100 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-teal">
+            <option value="">-- Choose exact Topic --</option>
+            {topics.map((topic,index) => (
+              <option key={index} value={topic.name}>
+                {topic.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
+
+      {selectedTopicName && (
+        <div className="mt-3 p-3 bg-brand-teal/10 border border-brand-teal/20 rounded-lg flex items-center gap-2 text-xs text-brand-teal font-medium">
+          <CheckCircle2 className="w-4 h-4 shrink-0"/>
+          <span>
+            Selected: <strong>{selectedSubject?.subject}</strong> → {selectedUnit?.title} → <strong>selectedTopicName</strong>
+          </span>
+        </div>
+      )}
     </div>
   );
 };
