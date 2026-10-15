@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import API from "../api/axios";
 import { Layers, CheckCircle2 } from "lucide-react";
 
-const AcademicSelector = ({ onselect }) => {
+const AcademicSelector = ({ onSelect }) => {
   const [hierarchy, setHierarchy] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +48,7 @@ const AcademicSelector = ({ onselect }) => {
     const topic = e.target.value;
     setSelectedTopicName(topic);
 
-    if (onselect && selectedSubject && selectedUnit) {
+    if (onSelect && selectedSubject && selectedUnit) {
       onselect({
         grade: selectedSubject.grade,
         stream: selectedSubject.stream,
@@ -62,7 +62,7 @@ const AcademicSelector = ({ onselect }) => {
 
   if (loading) {
     return (
-      <div className="p-r text-center text-slate-500 text-sm animate-pulse">
+      <div className="p-6 text-center text-slate-500 text-sm animate-pulse">
         Loading syllabus & subject ...
       </div>
     );
@@ -121,7 +121,7 @@ const AcademicSelector = ({ onselect }) => {
         <div className="mt-3 p-3 bg-brand-teal/10 border border-brand-teal/20 rounded-lg flex items-center gap-2 text-xs text-brand-teal font-medium">
           <CheckCircle2 className="w-4 h-4 shrink-0"/>
           <span>
-            Selected: <strong>{selectedSubject?.subject}</strong> → {selectedUnit?.title} → <strong>selectedTopicName</strong>
+            Selected: <strong>{selectedSubject?.subject}</strong> → {selectedUnit?.title} → <strong>{selectedTopicName}</strong>
           </span>
         </div>
       )}

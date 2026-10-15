@@ -95,3 +95,40 @@ export const seedAcademicData = async (req,res) => {
         res.status(500).json({message: error.message})
     }
 }
+
+export const updateAcademicSubject = async (req,res) => {
+    try{
+        const {grade, stream, subject,units} = req.body;
+
+        const academic= await Academic.findById(req.params.id)
+        if (!academic) {
+            return res.status(404).json({message: 'Subject hierarchy not found'})
+        }
+
+        academic.grade = grade || academic.grade;
+        academic.stream = stream || academic.stream;
+        academic.subject = subject || academic.subject
+        if (units) {
+            academic.units = units
+        }
+
+        const update = await academic.save()
+        res.status(200).json(update)
+    }catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
+export const deleteAcademicSubject = async (req,res) =>{
+    try {
+        const academic = await Academic.findById(req.params.id)
+        if(!academic){
+            return res.status(404).json({message: 'Subject hierarchy not found'})
+        }
+
+        await academic.deleteOne()
+        res.status(200).json({message: 'Subject hierarchy removed successfully'})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
