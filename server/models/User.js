@@ -40,15 +40,18 @@ const userSchema = new mongoose.Schema(
         },
 
         teacherProfile:{
+            headline: {type: String, default: ''},
             bio:{type: String,default:''},
             qualifications: [{type: String}],
             subjects: [{type: String}],
+            verificationDocuments: [{type: String}],
             verificationStatus: {
                 type: String,
                 enum: ['pending','approved','rejected'],
                 default:'pending'
             },
             hourlyRate: {type:Number,default:0},
+            experienceYears: {type: Number, default:0},
             rating: {type:Number,default:5.0}
         },
 

@@ -4,6 +4,7 @@ import cors from 'cors'
 import { connectDB } from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import academicRoutes from './routes/academicRoutes.js'
+import teacherRoutes from './routes/teacherRoutes.js'
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/auth',authRoutes)
 app.use('/api/academic',academicRoutes)
+app.use('/api/teachers',teacherRoutes)
 
 connectDB()
 
