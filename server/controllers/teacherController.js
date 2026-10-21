@@ -1,4 +1,3 @@
-import { use } from 'react'
 import User from '../models/User.js'
 
 export const getTeacherProfile = async (req,res) => {
@@ -28,10 +27,10 @@ export const updateTeacherProfile = async (req,res) => {
         if (name) user.name =name
         if (phone) user.phone = phone
 
-        user.teacherProfile.headline = headline !== undefined ? headline : user.teacherProfile.headline
-        user.teacherProfile.bio = bio !== undefined ? bio : user.teacherProfile.bio
-        user.teacherProfile.hourlyRate = hourlyRate !== undefined ? Number(hourlyRate) : user.teacherProfile.hourlyRate
-        user.teacherProfile.experienceYears = experienceYears !== undefined ? Number(experienceYears) : user.teacherProfile.experienceYears
+        if (headline !== undefined) user.teacherProfile.headline = headline
+        if (bio !== undefined) user.teacherProfile.bio = bio
+        if (hourlyRate !== undefined) user.teacherProfile.hourlyRate = Number(hourlyRate)
+        if (experienceYears !== undefined) user.teacherProfile.experienceYears = Number(experienceYears)
 
         if (qualifications) user.teacherProfile.qualifications = qualifications
         if (subjects) user.teacherProfile.subjects = subjects
