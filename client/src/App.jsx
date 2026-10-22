@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import AcademicSelector from "./components/AcademicSelector"
 import AdminAcademic from "./pages/AdminAcademic";
+import TeacherProfileSettings from "./pages/TeacherProfileSettings";
 
 function App(){
   return (
@@ -32,6 +33,7 @@ function App(){
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/admin/academic" element={<AdminAcademic/>}/>
+            <Route path="/teacher/profile" element={<TeacherProfileSettings/>}/>
             </Routes>
           </main>
         </div>
