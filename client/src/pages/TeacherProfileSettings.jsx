@@ -8,11 +8,11 @@ const TeacherProfileSettings = () => {
         bio: '',
         hourlyRate: 0,
         experienceYears: 0,
-        subject: '',
+        subjects: '',
         qualifications: '',
-        verficationDocuments: ''
+        verificationDocuments: ''
     })
-    const [verficationStatus, setVerificationStatus] = useState('pending')
+    const [verificationStatus, setVerificationStatus] = useState('pending')
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
     const [message, setMessage] = useState('')
@@ -30,9 +30,9 @@ const TeacherProfileSettings = () => {
                     bio: tp.bio || '',
                     hourlyRate: tp.hourlyRate || 0,
                     experienceYears: tp.experienceYears || 0,
-                    subject: tp.subject ? tp.subject.join(', '): '',
+                    subject: tp.subjects ? tp.subjects.join(', '): '',
                     qualifications: tp.qualifications ? tp.qualifications.join(', '):'',
-                    verficationDocuments: tp.verficationDocuments ? tp.verficationDocuments.join(', '):'',
+                    verificationDocuments: tp.verificationDocuments ? tp.verificationDocuments.join(', '):'',
                 })
             }catch (err){
                 setError(err.response?.data?.message || 'Failed to load teacher profile') 
@@ -56,14 +56,14 @@ const TeacherProfileSettings = () => {
         try {
             const payload = {
                 ...formData,
-                subject: formData.subject.split(',').map((s) => s.trim()).filter(Boolean),
+                subjects: formData.subjects.split(',').map((s) => s.trim()).filter(Boolean),
                 qualifications: formData.qualifications.split(',').map((q)=>q.trim()).filter(Boolean),
-                verficationDocuments: formData.verficationDocuments.split(',').map((d)=>d.trim()).filter(Boolean)
+                verificationDocuments: formData.verificationDocuments.split(',').map((d)=>d.trim()).filter(Boolean)
             }
 
             const res = await API.put('/teachers/profile', payload)
 
-            setVerificationStatus(res.data.teacherProfile.verficationStatus)
+            setVerificationStatus(res.data.teacherProfile.verificationStatus)
             setMessage('Profile updated! Your chages are pending Admin approval.')
         }catch(err){
             setError(err.response?.data?.message || 'Failed to update profile')
@@ -74,6 +74,105 @@ const TeacherProfileSettings = () => {
     if(loading){
         return <div className="p-8 text-center text-slate-500">Loading your profile...</div>
     }
+     return(
+        <div className="max-w-3xl mx-auto space-y-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                <div>
+                    <h2 className="text-xl font-bold text-slate-900">Teacher Profile & Verification</h2>
+                    <p className="text-sm text-slate-500">Manage your credentials, teaching areas, and rates</p>
+                </div>
+                <div>
+                    {verificationStatus === 'approved' && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <CheckCircle className="w-4 h-4"/>
+                            Verified Teacher
+                        </span>
+                    )}
+                    {verificationStatus === 'pending' && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                            <Clock className="w-4 h-4"/>
+                            Pending Admin Review
+                        </span>
+                    )}
+                    {verificationStatus === 'rejected' && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                            <AlertCircle className="w-4 h-4"/>
+                            Verification Rejected
+                        </span>
+                    )}
+                </div>
+            </div>
+
+            {message && (
+                <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm rounded-xl">
+                    {message}
+                </div>
+            )}
+
+            {error && (
+                <div className="p-4 bg-rose-50 border border-rose-200 text-rose-800 text-sm rounded-xl">
+                    {error}
+                </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                        Professional Headline
+                    </label>
+                    <input type="text" name="headline" value={formData.headline} onChange={handleChange} placeholder="e.g. BSc Engineering • 5+ Yrs Combined Maths Specialist" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-teal" />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                            Hourly Rate (LKR)
+                        </label>
+                        <input type="number" name="hourlyRate" value={formData.hourlyRate} onChange={handleChange} className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-teal" />
+                    </div>
+                    <div>
+                        <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                            Teaching Experience (Years)
+                        </label>
+                        <input type="number" name="experienceYears" value={formData.experienceYears} onChange={handleChange} className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-teal" />
+                    </div>
+                </div>
+
+                <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                        Teaching Subject (Coma Separated)
+                    </label>
+                    <input type="text" name="subjects" value={formData.subjects} onChange={handleChange} placeholder="Combined Mathematics, Physics" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-teal" />
+                </div>
+
+                <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Qualifications & Degrees (Comma Separated)</label>
+                    <input type="text" name="qualifications" value={formData.qualifications} onChange={handleChange} placeholder="BSc Eng (Hons) Moratuwa, Dip in Education" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-teal" />
+                </div>
+
+                <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">About You / Bio</label>
+                    <textarea name="bio" rows={4} value={formData.bio} onChange={handleChange} placeholder="Tell student about your teching methodology, past student results, and expertise..." className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-teal"/>
+                </div>
+
+                <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
+                        Verification Documents (NIC / Degree / Certificate URLs)
+                    </label>
+                    <input type="text" name="verificationDocuments" value={formData.verificationDocuments} onChange={handleChange} placeholder="http://drive.google.com/file/... or image link" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-teal" />
+                    <p className="text-[11px] text-slate-400 mt-1">
+                        Provide links to your degree Certificate or NIC copy for Admin verification.
+                    </p>
+                </div>
+
+                <button type="submit" disabled={saving} className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-brand-teal hover:bg-teal-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-all">
+                    <Save className="w-4 h-4"/>
+                    {saving ? 'Saving changes...' : 'Save & Submit for Verification'}
+                </button>
+            </form>
+        </div>
+     )
+    
 }
 
 export default TeacherProfileSettings
