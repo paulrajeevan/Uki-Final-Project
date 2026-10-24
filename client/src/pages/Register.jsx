@@ -226,7 +226,7 @@ const Register = () => {
                   value={formData.subjects}
                   onChange={handleChange}
                   placeholder="e.g. Combined Maths, Physics"
-                  className="w-full pl-9 pr-3 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-teal"
+                  className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-teal"
                 />
               </div>
             </div>

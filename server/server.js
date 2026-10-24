@@ -5,6 +5,7 @@ import { connectDB } from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import academicRoutes from './routes/academicRoutes.js'
 import teacherRoutes from './routes/teacherRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use('/api/auth',authRoutes)
 app.use('/api/academic',academicRoutes)
 app.use('/api/teachers',teacherRoutes)
+app.use('/api/upload', uploadRoutes)
 
 connectDB()
 
