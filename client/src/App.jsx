@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import AcademicSelector from "./components/AcademicSelector"
 import AdminAcademic from "./pages/AdminAcademic";
 import TeacherProfileSettings from "./pages/TeacherProfileSettings";
+import AdminTeacherVerification from "./pages/AdminTeacherVerification";
 
 function App(){
   return (
@@ -34,6 +35,7 @@ function App(){
             <Route path="/login" element={<Login />}/>
             <Route path="/admin/academic" element={<AdminAcademic/>}/>
             <Route path="/teacher/profile" element={<TeacherProfileSettings/>}/>
+            <Route path="/admin/teachers" element={<AdminTeacherVerification/>}/>
             </Routes>
           </main>
         </div>
