@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import {v2 as cloudinary} from 'cloudinary'
-import { protect } from '../middleware/authMiddleware'
+import { protect } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
@@ -15,12 +15,12 @@ const storage = multer.memoryStorage()
 const upload = multer({
     storage,
     limits: { fileSize: 10 * 1024 * 1024},
-    fileFilter: (req,file,cd) => {
+    fileFilter: (req,file,cb) => {
         if (
             file.mimetype === 'application/pdf' ||
             file.mimetype.startsWith('image/')
         ){
-            CarBattery(null,true)
+            cb(null,true)
         }else{
             cb(new Error('Only PDF and image files are allowed!'),false)
         }
